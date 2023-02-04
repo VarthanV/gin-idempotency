@@ -14,8 +14,8 @@ type IdempotencyConfig struct {
 	// requestid header. By default it looks for the key name X-REQUEST-ID
 	HeaderName string
 
-	// WhitelistHTTPsMethods are The HTTP methods to whitelist without requestid to be passed
-	WhitelistHTTPsMethods []string
+	// WhitelistHTTPMethods are The HTTP methods to whitelist without requestid to be passed
+	WhitelistHTTPMethods []string
 
 	// ContextKeyName The requestid middleware takes requestid from the header validates it
 	// if any pattern is given for validation and sets the value in your gin context
@@ -83,7 +83,7 @@ func newIdempotency(config IdempotencyConfig) IdempotencyConfig {
 		cfg.StatusCode = config.StatusCode
 	}
 
-	cfg.WhitelistHTTPsMethods = config.WhitelistHTTPsMethods
+	cfg.WhitelistHTTPMethods = config.WhitelistHTTPMethods
 
 	return cfg
 }
