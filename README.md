@@ -83,6 +83,10 @@ func main() {
     Response payload which you want to send to the client when the key is not present. Default response is {"error":"${{HeaderName}} is missing"}
     */
     Response: map[string]string{"message":"idempotency-key-doesnt-exist"},
+    /* 
+     Whitelist certain HTTP methods based on your needs
+    */
+    WhitelistHTTPMethods: []string{"GET"}
     
   }))
 
