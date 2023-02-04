@@ -1,4 +1,4 @@
-package requestid
+package idempotency
 
 import (
 	"fmt"
@@ -8,8 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// RequestID represents all available options for the middleware
-type RequestID struct {
+// IdempotencyConfig represents all available options for the middleware
+type IdempotencyConfig struct {
 	// HeaderName is to be passed when use want to use a custom key name for your
 	// requestid header. By default it looks for the key name X-REQUEST-ID
 	HeaderName string
@@ -24,7 +24,7 @@ type RequestID struct {
 	ContextKeyName string
 
 	// Response The response that you want to return to the user when the requestid is not present in the headers
-	// the default response will be {"message":"${{HeaderName}} is missing"}
+	// the default response will be {"error":"${{HeaderName}} is missing"}
 	// you can pass any serializable value to pass in the response
 	Response interface{}
 
@@ -37,18 +37,18 @@ type RequestID struct {
 // DefaultConfig Values
 
 const (
-	DefaultHeaderName     = "X-REQUEST-ID"
-	DefaultContextKeyName = "RequestID"
+	DefaultHeaderName     = "Idempotency-Key"
+	DefaultContextKeyName = "IdempotencyKey"
 )
 
 func getDefaultResponse(headerName string) gin.H {
 	responseMessage := fmt.Sprintf("%s is missing", headerName)
-	return gin.H{"message": responseMessage}
+	return gin.H{"error": responseMessage}
 }
 
 // Default returns a generic default configuration.
-func Default() RequestID {
-	return RequestID{
+func Default() IdempotencyConfig {
+	return IdempotencyConfig{
 		HeaderName:     DefaultHeaderName,
 		ContextKeyName: DefaultContextKeyName,
 		StatusCode:     http.StatusForbidden,
@@ -56,8 +56,8 @@ func Default() RequestID {
 	}
 }
 
-func newRequestID(config RequestID) RequestID {
-	cfg := RequestID{}
+func newIdempotency(config IdempotencyConfig) IdempotencyConfig {
+	cfg := IdempotencyConfig{}
 
 	if cfg.HeaderName == "" {
 		cfg.HeaderName = DefaultHeaderName

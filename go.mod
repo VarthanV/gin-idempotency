@@ -1,4 +1,4 @@
-module github.com/VarthanV/requestid
+module github.com/VarthanV/gin-idempotency
 
 go 1.18
 

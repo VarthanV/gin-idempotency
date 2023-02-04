@@ -1,4 +1,4 @@
-package requestid
+package idempotency
 
 import "github.com/gin-gonic/gin"
 
@@ -11,7 +11,7 @@ func contains(s []string, e string) bool {
 	return false
 }
 
-func (r *RequestID) applyToContext(ctx *gin.Context) {
+func (r *IdempotencyConfig) applyToContext(ctx *gin.Context) {
 	if contains(r.WhitelistHTTPsMethods, ctx.Request.Method) {
 		ctx.Next()
 	}
@@ -24,8 +24,8 @@ func (r *RequestID) applyToContext(ctx *gin.Context) {
 	ctx.Next()
 }
 
-func New(config RequestID) gin.HandlerFunc {
-	r := newRequestID(config)
+func New(config IdempotencyConfig) gin.HandlerFunc {
+	r := newIdempotency(config)
 	return func(ctx *gin.Context) {
 		r.applyToContext(ctx)
 	}
