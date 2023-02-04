@@ -41,7 +41,7 @@ import (
 
 func main() {
   r := gin.Default()
-  r.Use(idempotency.Default())
+  r.Use(idempotency.New(idempotency.Default()))
 
   r.POST("/transfer", func(c *gin.Context) {
     var existingIdempotentKey = "foo"
