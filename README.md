@@ -69,10 +69,20 @@ import (
 func main() {
   r := gin.Default()
   r.Use(idempotency.New(idempotency.IdempotencyConfig{
-    HeaderName: "foo" // The middleware by default looks for the header with the key name  ``Idempotency-Key``
-    ContextKeyName: "foo-ctx" // The value in the header will parsed and will be set in the context with the  key name IdempotencyKey by default, You can customise it based on your needs
-    StatusCode: 418 // The httpStatusCode which you want to return incase the idempotencykey is not present default is 403
-    Response: map[string]string{"message":"idempotency-key-doesnt-exist"} //Response payload which you want to send to the client when the key is not present. Default response is {"error":"${{HeaderName}} is missing"}
+    /* The middleware by default looks for the header with the key name  ``Idempotency-Key``*/
+    HeaderName: "foo" 
+
+    /* The value in the header will parsed and will be set in the context with the  key name IdempotencyKey in the gin context by default, You can customise it based on your needs by the ContextKeyName param */
+    ContextKeyName: "foo-ctx" 
+
+    /*
+    The httpStatusCode which you want to return incase the idempotencykey is not present default is 403
+    */
+    StatusCode: 418 
+    /* 
+    Response payload which you want to send to the client when the key is not present. Default response is {"error":"${{HeaderName}} is missing"}
+    */
+    Response: map[string]string{"message":"idempotency-key-doesnt-exist"}
     
   }))
 
