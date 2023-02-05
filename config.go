@@ -59,25 +59,25 @@ func Default() IdempotencyConfig {
 func newIdempotency(config IdempotencyConfig) IdempotencyConfig {
 	cfg := IdempotencyConfig{}
 
-	if cfg.HeaderName == "" {
+	if config.HeaderName == "" {
 		cfg.HeaderName = DefaultHeaderName
 	} else {
 		cfg.HeaderName = config.HeaderName
 	}
 
-	if cfg.ContextKeyName == "" {
+	if config.ContextKeyName == "" {
 		cfg.ContextKeyName = DefaultContextKeyName
 	} else {
 		cfg.ContextKeyName = config.ContextKeyName
 	}
 
-	if isNil(cfg.Response) {
+	if isNil(config.Response) {
 		cfg.Response = getDefaultResponse(cfg.HeaderName)
 	} else {
 		cfg.Response = config.Response
 	}
 
-	if cfg.StatusCode == 0 {
+	if config.StatusCode == 0 {
 		cfg.StatusCode = http.StatusForbidden
 	} else {
 		cfg.StatusCode = config.StatusCode
