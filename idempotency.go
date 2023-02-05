@@ -14,6 +14,7 @@ func contains(s []string, e string) bool {
 func (r *IdempotencyConfig) applyToContext(ctx *gin.Context) {
 	if contains(r.WhitelistHTTPMethods, ctx.Request.Method) {
 		ctx.Next()
+		return
 	}
 	requestID := ctx.GetHeader(r.HeaderName)
 	if requestID == "" {
